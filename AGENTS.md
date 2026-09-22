@@ -50,7 +50,7 @@ BRD → Gate 0 (BRD Review) → Spec (.spec.md) → Gate 1 (Spec Peer Review)
 
 | Gate | Reviewer(s) |
 |---|---|
-| Gate 0 (BRD Review) | subham.bhattacharyya@intglobal.com |
+| Gate 0 (BRD Review) | supratim.jetty@intglobal.com |
 | Gate 1 (Spec Peer Review) | soumyadeep.adhikary@intglobal.com |
 | Gate 2 (Code Review) | TBD — assign before first Gate 2 review |
 
