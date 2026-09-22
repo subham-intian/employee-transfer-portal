@@ -17,15 +17,15 @@ The repository, NOT the chat window, is the persistent memory of the project.
 - Do NOT rely on chat history, memory, or user recall as the permanent source of truth.
 - Do NOT guess project state, active features, or next tasks.
 - Read only the specific repository artifacts required to determine the active state.
-- All file paths and references written to `.ai-context/` artifacts MUST be **repository-relative** (e.g. `.ai-context/specs/<slug>.spec.md`, `src/...`) to ensure full Git portability across developer workstations and CI/CD. Never write local OS absolute paths (`C:\Users\...`).
+- All file paths and references written to `../../../.ai-context` artifacts MUST be **repository-relative** (e.g. `.ai-context/specs/<slug>.spec.md`, `src/...`) to ensure full Git portability across developer workstations and CI/CD. Never write local OS absolute paths (`C:\Users\...`).
 
 ---
 
 # Skill & Governance Resolution Hierarchy
 
 When executing any engineering task or reading project governance:
-1. **Priority 1 — Check Repository Local Files FIRST**: Inspect project repository root for `AGENTS.md` and `.agents/skills/<skill_name>/SKILL.md`. If present, load and follow local project skills.
-2. **Priority 2 — Fallback to Global Skills SECOND**: If and ONLY if a requested skill or rule file is not present in `.agents/skills/`, fall back to reading global skills for whichever AI tool is in use: `~/.claude/skills/<skill_name>/SKILL.md` (Claude Code) or `~/.gemini/config/skills/<skill_name>/SKILL.md` (Gemini).
+1. **Priority 1 — Check Repository Local Files FIRST**: Inspect project repository root for `../../../AGENTS.md` and `..`. If present, load and follow local project skills.
+2. **Priority 2 — Fallback to Global Skills SECOND**: If and ONLY if a requested skill or rule file is not present in `..`, fall back to reading global skills for whichever AI tool is in use: `~/.claude/skills/<skill_name>/SKILL.md` (Claude Code) or `~/.gemini/config/skills/<skill_name>/SKILL.md` (Gemini).
 
 ---
 
@@ -76,7 +76,7 @@ Wait for Developer Confirmation & Execute Selected Action
 ### 1. BRD & Gate 0 State Rules
 
 #### Scenario A — BRD Approved (`BRD = APPROVED` / `Gate 0 = APPROVED`)
-If `.ai-context/BRD.md` has passed Gate 0 PR review:
+If `../../../.ai-context/BRD.md` has passed Gate 0 PR review:
 - Do **NOT** automatically regenerate or modify the approved BRD.
 - Prompt the developer:
   > 🟢 **BRD has already been approved (Gate 0 Passed).**
@@ -106,8 +106,8 @@ If Gate 0 PR review record (`.ai-context/pr_reviews/BRD-*.md`) has status `Chang
 - Do **NOT** silently apply changes without explicit user confirmation.
 
 #### Scenario C — Manual BRD Change Detection
-If the developer manually modified `.ai-context/BRD.md` after a previous review or baseline:
-- Compare current `.ai-context/BRD.md` against the previously reviewed/approved snapshot or Git history.
+If the developer manually modified `../../../.ai-context/BRD.md` after a previous review or baseline:
+- Compare current `../../../.ai-context/BRD.md` against the previously reviewed/approved snapshot or Git history.
 - If changes are detected, notify the developer:
   > 🔍 **Changes detected in BRD after previous review.**
 - Do **NOT** automatically resubmit for Gate 0 review. Ask the developer:
@@ -195,7 +195,7 @@ During `/int-project-resume`, the engine inspects Git branch, commit history, wo
 
 1. **`No Changes`**: Working tree clean; repository matches last reviewed state.
 2. **`Workflow Changes`**: System-generated log, status, or context updates during execution.
-3. **`Manual Changes`**: Developer manually edited `.ai-context/BRD.md`, `.spec.md`, or source code outside active agent prompt.
+3. **`Manual Changes`**: Developer manually edited `../../../.ai-context/BRD.md`, `.spec.md`, or source code outside active agent prompt.
 4. **`Changes Requested by Reviewer`**: Gate 0, Gate 1, or Gate 2 PR review submitted with `Changes Requested`.
 5. **`Changes Already Reviewed`**: Code/Spec modifications already submitted and reviewed in a previous PR record.
 6. **`New Unreviewed Changes`**: Uncommitted or fresh changes awaiting formal review submission.
@@ -221,12 +221,12 @@ During `/int-project-resume`, the engine inspects Git branch, commit history, wo
 When working with an existing, legacy, or ongoing project:
 
 1. **Automatic Control Plane Upgrade (Dynamic Sync)**:
-   - During Step 2 of session continuation, the agent inspects the project's local `.agent/rules/` and `.agent/workflows/`.
-   - If any workflow files (e.g. `int-hotfix-management.md`, `int-release-management.md`, `int-project-from-brd.md`, `int-production-incident.md`, `int-brd-ingestion.md`, `int-project-resume.md`, `int-pr-gate-workflow.md`, `int-code-review.md`, `int-generate-tests.md`, `int-project-setup.md`) or rule files are missing compared to `skills/int-project-setup/resources/INT-Control-Plane/.agent/`, the agent **automatically copies the missing files** into `.agent/` without overwriting custom project code or user settings.
+   - During Step 2 of session continuation, the agent inspects the project's local `../../rules` and `.agent/workflows/`.
+   - If any workflow files (e.g. `int-hotfix-management.md`, `int-release-management.md`, `int-project-from-brd.md`, `int-production-incident.md`, `int-brd-ingestion.md`, `int-project-resume.md`, `int-pr-gate-workflow.md`, `int-code-review.md`, `int-generate-tests.md`, `int-project-setup.md`) or rule files are missing compared to `skills/int-project-setup/resources/INT-Control-Plane/.agent/`, the agent **automatically copies the missing files** into `../..` without overwriting custom project code or user settings.
 
 2. **Immediate Global Governance Application**:
    - Global rules (`GEMINI.md` for Gemini, or the equivalent global memory/instructions file for Claude Code) apply universally across all projects regardless of when the project was created.
    - For any old project, the agent will automatically enforce the **Client Observation & Change Management Protocol** (auto-detect Spec ID, draft Spec updates, request Gate 1 approval, run TDD RED -> GREEN) for any client feedback or design prompt.
 
-3. **Legacy Projects Lacking `.ai-context/`**:
-   - If an existing project lacks `.ai-context/`, the agent runs `int-project-setup` in **Non-Destructive Baseline Mode** to generate `.ai-context/` artifacts and templates without touching existing source code (`src/`, `tests/`).
+3. **Legacy Projects Lacking `../../../.ai-context`**:
+   - If an existing project lacks `../../../.ai-context`, the agent runs `int-project-setup` in **Non-Destructive Baseline Mode** to generate `.ai-context/` artifacts and templates without touching existing source code (`src/`, `tests/`).

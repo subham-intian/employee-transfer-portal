@@ -14,9 +14,9 @@ This skill governs software release validation, version tagging, status board tr
 
 A release is cut ONLY when all constituent feature Specs, hotfix Specs, and bug fixes to be included in the release satisfy the following:
 
-1. **Status Board State**: Marked as `Ready for Release` in `.ai-context/status.md`.
+1. **Status Board State**: Marked as `Ready for Release` in `../../../.ai-context/status.md`.
 2. **Gate 2 Completion**: Gate 2 code review checklist passed and signed off.
-3. **Automated Test Suite**: All tests under `tests/frontend/` and `tests/backend/` pass cleanly (GREEN).
+3. **Automated Test Suite**: All tests under `tests/frontend/` and `../../../tests/backend` pass cleanly (GREEN).
 4. **No Blockers**: No open Sev-1/Sev-2 incidents blocking the release.
 
 ---
@@ -55,7 +55,7 @@ Trigger Scripted CI/CD Client Repository Sync
 Every software release MUST generate a release artifact under:
 `.ai-context/releases/RELEASE-vX.Y.Z.md`
 
-This file MUST be instantiated directly from `.ai-context/templates/release.template.md`, and its content drafted from **Spec Intent** (`.ai-context/specs/<feature-slug>.spec.md`), NOT raw git commits.
+This file MUST be instantiated directly from `../../../.ai-context/templates/release.template.md`, and its content drafted from **Spec Intent** (`.ai-context/specs/<feature-slug>.spec.md`), NOT raw git commits.
 
 ## Release Artifact Structure (`.ai-context/releases/RELEASE-vX.Y.Z.md`)
 ```markdown
@@ -77,6 +77,6 @@ _Release Date: YYYY-MM-DD_
 
 # Status Board Transition
 
-Upon release execution, update `.ai-context/status.md`:
+Upon release execution, update `../../../.ai-context/status.md`:
 1. Update each included Spec status to: `Released (vX.Y.Z)`.
 2. Add a same-day entry under `Daily Execution Log` summarizing the release tag, date, and included specs/hotfixes.

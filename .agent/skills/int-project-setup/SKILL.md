@@ -16,7 +16,7 @@ The INT Control Plane is an organizational standard and MUST remain unchanged.
 
 # MANDATORY STEP 1 — Technology & Architecture Discovery Gate
 
-Before generating execution layer folders (`src/`, `tests/`) or starting implementation, the agent MUST confirm all foundational technology and architecture parameters.
+Before generating execution layer folders (`../../../src`, `tests/`) or starting implementation, the agent MUST confirm all foundational technology and architecture parameters.
 
 If any of the following items are ambiguous or not explicitly specified in the prompt or provided BRD, **the agent MUST ask and clarify with the user before proceeding**:
 
@@ -37,7 +37,7 @@ If any of the following items are ambiguous or not explicitly specified in the p
 - **Do NOT skip this discovery gate** or jump directly into project directory structure generation or feature coding.
 - **Do NOT omit the Architecture Style question for Backend-Only or Frontend-Only projects**. Architecture style selection is mandatory for every project type without exception.
 - **Do NOT invent technology choices or reviewer assignments** without user confirmation or BRD backing.
-- Immediately populate **`.ai-context/project_context.md`** and **`.ai-context/architecture.md`** with these confirmed choices and reviewer assignments (`Gate 1 Reviewers` and `Gate 2 Reviewers` list) before creating code structures.
+- Immediately populate **`../../../.ai-context/project_context.md`** and **`../../../.ai-context/architecture.md`** with these confirmed choices and reviewer assignments (`Gate 1 Reviewers` and `Gate 2 Reviewers` list) before creating code structures.
 
 ---
 
@@ -47,13 +47,13 @@ The following directory is the authoritative source for the INT Control Plane:
 `skills/int-project-setup/resources/INT-Control-Plane/.agent/`
 
 You MUST dynamically copy the entire contents of this directory into the project root:
-`.agent/`
+`../..`
 
 ## Dynamic Copying Protocol:
 
-- **Do NOT rely on hardcoded file lists.** The agent MUST dynamically discover and copy ALL files and subdirectories present in `skills/int-project-setup/resources/INT-Control-Plane/.agent/` directly to `.agent/` in the project workspace root.
-- **Dynamic Rule Synchronization**: Every rule file (e.g., `.md`, `.agentignore`) present inside `skills/int-project-setup/resources/INT-Control-Plane/.agent/rules/` (including any new rules added now or in the future) MUST be dynamically discovered and copied to `.agent/rules/`.
-- **Dynamic Workflow Synchronization**: Every workflow file (`.md`) present inside `skills/int-project-setup/resources/INT-Control-Plane/.agent/workflows/` (including any new workflows added now or in the future) MUST be dynamically discovered and copied to `.agent/workflows/`.
+- **Do NOT rely on hardcoded file lists.** The agent MUST dynamically discover and copy ALL files and subdirectories present in `skills/int-project-setup/resources/INT-Control-Plane/.agent/` directly to `../..` in the project workspace root.
+- **Dynamic Rule Synchronization**: Every rule file (e.g., `.md`, `.agentignore`) present inside `skills/int-project-setup/resources/INT-Control-Plane/.agent/rules/` (including any new rules added now or in the future) MUST be dynamically discovered and copied to `../../rules`.
+- **Dynamic Workflow Synchronization**: Every workflow file (`.md`) present inside `skills/int-project-setup/resources/INT-Control-Plane/.agent/workflows/` (including any new workflows added now or in the future) MUST be dynamically discovered and copied to `../../workflows`.
 - If new rule or workflow files are added to `skills/int-project-setup/resources/INT-Control-Plane/.agent/`, the setup/continuation process MUST dynamically include them automatically.
 
 ## Rules for Copying:
@@ -70,26 +70,26 @@ The copied INT Control Plane files are authoritative and must remain content-equ
 
 ---
 
-# MANDATORY PROJECT VENDOR-AGNOSTIC GOVERNANCE & LOCAL SKILLS (`AGENTS.md` & `.agents/skills/`)
+# MANDATORY PROJECT VENDOR-AGNOSTIC GOVERNANCE & LOCAL SKILLS (`../../../AGENTS.md` & `..`)
 
 To ensure the project repository is completely self-contained and vendor-agnostic (independent of any specific AI tool or provider such as Gemini, Claude, Cursor, Windsurf, or Copilot):
 
-1. **Auto-Generate `AGENTS.md` in Workspace Root**:
-   During initial project setup, the agent MUST write **`AGENTS.md`** into the project workspace root. `AGENTS.md` contains the INT AI-First Engineering Policy, authority hierarchy, lifecycle definition, and core governance rules.
+1. **Auto-Generate `../../../AGENTS.md` in Workspace Root**:
+   During initial project setup, the agent MUST write **`../../../AGENTS.md`** into the project workspace root. `../../../AGENTS.md` contains the INT AI-First Engineering Policy, authority hierarchy, lifecycle definition, and core governance rules.
 
-2. **Auto-Copy Project-Level Skills into `.agents/skills/`**:
-   During project setup, the agent MUST create **`.agents/skills/`** in the project workspace root and dynamically copy all project SDD sub-skills into it:
-   - `.agents/skills/int-project-setup/SKILL.md`
-   - `.agents/skills/int-sdd-lifecycle/SKILL.md`
-   - `.agents/skills/int-brd-ingestion/SKILL.md`
-   - `.agents/skills/int-incident-management/SKILL.md`
-   - `.agents/skills/int-hotfix-management/SKILL.md`
-   - `.agents/skills/int-release-management/SKILL.md`
-   - `.agents/skills/int-session-continuation/SKILL.md`
+2. **Auto-Copy Project-Level Skills into `..`**:
+   During project setup, the agent MUST create **`..`** in the project workspace root and dynamically copy all project SDD sub-skills into it:
+   - `..`
+   - `../int-sdd-lifecycle/SKILL.md`
+   - `../int-brd-ingestion/SKILL.md`
+   - `../int-incident-management/SKILL.md`
+   - `../int-hotfix-management/SKILL.md`
+   - `../int-release-management/SKILL.md`
+   - `../int-session-continuation/SKILL.md`
 
 3. **Mandatory Skill & Governance Resolution Hierarchy**:
    After project setup is complete, whenever any skill or governance rule is executed in the workspace, the system MUST enforce the following loading priority:
-   - **Priority 1 (Local Repository First)**: First check if `AGENTS.md` or local project skills (`.agents/skills/<skill_name>/SKILL.md`) exist inside the project repository root. If present, load and execute the **local project skills** first.
+   - **Priority 1 (Local Repository First)**: First check if `../../../AGENTS.md` or local project skills (`..`) exist inside the project repository root. If present, load and execute the **local project skills** first.
    - **Priority 2 (Global Fallback Second)**: If and ONLY if a requested skill or rule file is not present locally in the project repository root, fall back to checking global skills for whichever AI tool is in use: `~/.claude/skills/<skill_name>/SKILL.md` (Claude Code) or `~/.gemini/config/skills/<skill_name>/SKILL.md` (Gemini).
 
 This ensures that every team member or AI assistant working on the project prioritizes repository-local skills directly inside the project folder without relying on external or cloud AI configurations.
@@ -102,20 +102,20 @@ When the user runs `/int-project-setup` on a project that is **already set up**:
 
 1. **Non-Destructive Guarantee**:
    - The system **NEVER** deletes, overwrites, or resets existing project-specific data (`BRD.md`, `project_context.md`, `constitution.md`, `architecture.md`, `status.md`, `prompt_history.md`, specs, plans, tasks, test cases, or PR review records).
-   - All source code (`src/`, `tests/`) and legacy project structures remain 100% untouched.
+   - All source code (`../../../src`, `tests/`) and legacy project structures remain 100% untouched.
 
 2. **Control Plane & Local Skill Sync from Global Standards**:
-   - The system compares the local `.agent/rules/`, `.agent/workflows/`, and `.agents/skills/` with the latest global Control Plane resources and global skills (`~/.claude/skills/` or `~/.gemini/config/skills/`, matching whichever AI tool is in use).
-   - If global skills or control plane standards contain updated workflows (e.g. `pr-gate-workflow.md`, `int-standards.md`, `int-sdd-lifecycle`), the system **automatically updates and syncs `.agents/skills/` and `.agent/`** so the project repository is upgraded with the latest engineering standards and security fixes!
+   - The system compares the local `../../rules`, `.agent/workflows/`, and `..` with the latest global Control Plane resources and global skills (`~/.claude/skills/` or `~/.gemini/config/skills/`, matching whichever AI tool is in use).
+   - If global skills or control plane standards contain updated workflows (e.g. `pr-gate-workflow.md`, `int-standards.md`, `int-sdd-lifecycle`), the system **automatically updates and syncs `..` and `.agent/`** so the project repository is upgraded with the latest engineering standards and security fixes!
 
 3. **Missing Template & Directory Restoration**:
-   - If any new mandatory templates (e.g. `gate-1-review.template.md`, `gate-2-review.template.md`, `gate-review-dashboard-design.html`) or `.ai-context/` subdirectories are missing, the system non-destructively generates them.
+   - If any new mandatory templates (e.g. `gate-1-review.template.md`, `gate-2-review.template.md`, `gate-review-dashboard-design.html`) or `../../../.ai-context` subdirectories are missing, the system non-destructively generates them.
 
 ---
 
-# MANDATORY AUTOMATED `.gitignore` CREATION
+# MANDATORY AUTOMATED `../../../.gitignore` CREATION
 
-During initial project setup, the agent MUST automatically create **`.gitignore`** in the project workspace root with standard exclusion boundaries:
+During initial project setup, the agent MUST automatically create **`../../../.gitignore`** in the project workspace root with standard exclusion boundaries:
 
 ```gitignore
 # Dependencies
@@ -194,38 +194,38 @@ All listed files/directories are mandatory.
 
 ## MANDATORY AUTOMATED RUNTIME INSTANTIATION PROTOCOL
 
-During initial project setup, the agent MUST automatically generate the `.ai-context/` knowledge base on disk:
+During initial project setup, the agent MUST automatically generate the `../../../.ai-context` knowledge base on disk:
 
 1. **Auto-Generate Mandatory Artifact Subdirectories with Seed Files**:
    To ensure empty subdirectories are physically created on disk and tracked by Git, the agent MUST execute file creation for a `.gitkeep` file in each of the 10 mandatory subdirectories during setup:
 
-   - `.ai-context/specs/.gitkeep`
-   - `.ai-context/plans/.gitkeep`
-   - `.ai-context/tasks/.gitkeep`
-   - `.ai-context/test_cases/.gitkeep`
-   - `.ai-context/pr_reviews/.gitkeep`
-   - `.ai-context/decisions/.gitkeep`
-   - `.ai-context/incidents/.gitkeep`
-   - `.ai-context/hotfixes/.gitkeep`
-   - `.ai-context/releases/.gitkeep`
-   - `.ai-context/change_requests/.gitkeep`
-2. **Auto-Generate All 12 Template Files (`.ai-context/templates/`)**:
-   The agent MUST execute file creation to write all 12 template files into `.ai-context/templates/` using the exact source template contents defined in this skill document:
+   - `../../../.ai-context/specs/.gitkeep`
+   - `../../../.ai-context/plans/.gitkeep`
+   - `../../../.ai-context/tasks/.gitkeep`
+   - `../../../.ai-context/test_cases/.gitkeep`
+   - `../../../.ai-context/pr_reviews/.gitkeep`
+   - `../../../.ai-context/decisions/.gitkeep`
+   - `../../../.ai-context/incidents/.gitkeep`
+   - `../../../.ai-context/hotfixes/.gitkeep`
+   - `../../../.ai-context/releases/.gitkeep`
+   - `../../../.ai-context/change_requests/.gitkeep`
+2. **Auto-Generate All 12 Template Files (`../../../.ai-context/templates`)**:
+   The agent MUST execute file creation to write all 12 template files into `../../../.ai-context/templates` using the exact source template contents defined in this skill document:
 
-   - `.ai-context/templates/spec.template.md`
-   - `.ai-context/templates/plan.template.md`
-   - `.ai-context/templates/tasks.template.md`
-   - `.ai-context/templates/test_cases.template.md`
-   - `.ai-context/templates/gate-1-review.template.md`
-   - `.ai-context/templates/gate-2-review.template.md`
-   - `.ai-context/templates/adr.template.md`
-   - `.ai-context/templates/incident.template.md`
-   - `.ai-context/templates/hotfix-spec.template.md`
-   - `.ai-context/templates/release.template.md`
-   - `.ai-context/templates/change-request.template.md`
-   - `.ai-context/templates/gate-review-dashboard-design.html`
+   - `../../../.ai-context/templates/spec.template.md`
+   - `../../../.ai-context/templates/plan.template.md`
+   - `../../../.ai-context/templates/tasks.template.md`
+   - `../../../.ai-context/templates/test_cases.template.md`
+   - `../../../.ai-context/templates/gate-1-review.template.md`
+   - `../../../.ai-context/templates/gate-2-review.template.md`
+   - `../../../.ai-context/templates/adr.template.md`
+   - `../../../.ai-context/templates/incident.template.md`
+   - `../../../.ai-context/templates/hotfix-spec.template.md`
+   - `../../../.ai-context/templates/release.template.md`
+   - `../../../.ai-context/templates/change-request.template.md`
+   - `../../../.ai-context/templates/gate-review-dashboard-design.html`
 3. **Auto-Generate Base Context Files**:
-   Initialize `.ai-context/constitution.md`, `.ai-context/project_context.md`, `.ai-context/architecture.md`, `.ai-context/BRD.md`, `.ai-context/brd-change-log.md`, `.ai-context/status.md`, and `.ai-context/prompt_history.md`.
+   Initialize `../../../.ai-context/constitution.md`, `.ai-context/project_context.md`, `.ai-context/architecture.md`, `.ai-context/BRD.md`, `.ai-context/brd-change-log.md`, `.ai-context/status.md`, and `.ai-context/prompt_history.md`.
 
 ## Purpose of AI Context
 
@@ -234,7 +234,7 @@ It MUST NOT contain generic INT standards that belong to the `.agent` Control Pl
 
 ## CRITICAL RULE — FLAT FILE STRUCTURE (NO SUBDIRECTORIES)
 
-All artifacts created inside `.ai-context/` subdirectories MUST be created directly as **flat files** using standard naming conventions:
+All artifacts created inside `../../../.ai-context` subdirectories MUST be created directly as **flat files** using standard naming conventions:
 
 - Specs: `.ai-context/specs/<feature-slug>.spec.md` (e.g. `dynamic-request-management.spec.md`)
 - Plans: `.ai-context/plans/<feature-slug>.plan.md` (e.g. `dynamic-request-management.plan.md`)
@@ -250,7 +250,7 @@ All artifacts created inside `.ai-context/` subdirectories MUST be created direc
 
 ## CRITICAL RULE — PORTABLE REPOSITORY-RELATIVE PATHS (NO ABSOLUTE PATHS)
 
-All file references, cross-links, document paths, and code references recorded inside repository artifacts (`.ai-context/`, `status.md`, specs, plans, tasks, ADRs, releases, test cases) MUST be **relative to the repository root**:
+All file references, cross-links, document paths, and code references recorded inside repository artifacts (`../../../.ai-context`, `status.md`, specs, plans, tasks, ADRs, releases, test cases) MUST be **relative to the repository root**:
 
 - **CORRECT**: `.ai-context/specs/dynamic-request-management.spec.md`
 - **CORRECT**: `src/backend/controllers/requestController.ts`
@@ -261,13 +261,13 @@ All file references, cross-links, document paths, and code references recorded i
 
 ---
 
-# Mandatory Automated Template Creation (`.ai-context/templates/`)
+# Mandatory Automated Template Creation (`../../../.ai-context/templates`)
 
-During initial project setup, all template files under `.ai-context/templates/` MUST be automatically created. Every generated project artifact in `.ai-context/` is derived directly from its corresponding template:
+During initial project setup, all template files under `../../../.ai-context/templates` MUST be automatically created. Every generated project artifact in `.ai-context/` is derived directly from its corresponding template:
 
 ## Template-to-Artifact Mapping Table
 
-| Template File (`.ai-context/templates/`) | Target Artifact Location                                    | Workflow / Skill                           |
+| Template File (`../../../.ai-context/templates`) | Target Artifact Location                                    | Workflow / Skill                           |
 | ------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------ |
 | `spec.template.md`                       | `.ai-context/specs/<feature-slug>.spec.md`                | `int-sdd-lifecycle`                      |
 | `plan.template.md`                       | `.ai-context/plans/<feature-slug>.plan.md`                | `int-sdd-lifecycle`                      |
@@ -280,7 +280,7 @@ During initial project setup, all template files under `.ai-context/templates/` 
 | `hotfix-spec.template.md`                | `.ai-context/specs/hotfix-<slug>.spec.md`                 | `int-hotfix-management`                  |
 | `release.template.md`                    | `.ai-context/releases/RELEASE-vX.Y.Z.md`                  | `int-release-management`                 |
 | `change-request.template.md`             | `.ai-context/change_requests/CR-<YYYYMMDD>-<slug>.md`     | `int-sdd-lifecycle`                      |
-| `gate-review-dashboard-design.html`      | `.ai-context/templates/gate-review-dashboard-design.html` | Gate Review Visualizer                     |
+| `gate-review-dashboard-design.html`      | `../../../.ai-context/templates/gate-review-dashboard-design.html` | Gate Review Visualizer                     |
 
 ---
 
@@ -537,7 +537,7 @@ YYYY-MM-DD
 
 - [ ] **Spec Gap** → Route to: `.ai-context/specs/<feature-slug>.spec.md` (Update Spec & Plan)
 - [ ] **Implementation Defect** → Route to: `.ai-context/specs/hotfix-<incident-slug>.spec.md`
-- [ ] **New Requirement** → Route to: `.ai-context/BRD.md` (BRD ingestion workflow)
+- [ ] **New Requirement** → Route to: `../../../.ai-context/BRD.md` (BRD ingestion workflow)
 
 ## Root Cause Analysis
 
@@ -672,7 +672,7 @@ HTML/CSS design dashboard template for visualizing Gate 1 and Gate 2 status, act
 
 ## `constitution.md` Generation Rules & Structure
 
-When generating `.ai-context/constitution.md`, the file MUST adhere to the following mandatory structure:
+When generating `../../../.ai-context/constitution.md`, the file MUST adhere to the following mandatory structure:
 
 ```markdown
 # Project Constitution
@@ -713,7 +713,7 @@ If the supplied BRD contains a Constitution, Engineering Constitution, Technical
    - Recovery requirements
    - Versioning requirements
    - Compliance requirements
-6. Generate `.ai-context/constitution.md` from the Constitution contained in the BRD.
+6. Generate `../../../.ai-context/constitution.md` from the Constitution contained in the BRD.
 7. Organization-wide INT SDD rules may be referenced as governing engineering-process rules, but MUST NOT overwrite project-specific Constitution requirements.
 8. If a BRD Constitution conflicts with an organization-level rule, do not silently resolve the conflict. Flag the conflict for human review.
 9. Do not invent technologies, infrastructure, authentication mechanisms, databases, frameworks, or architectural constraints that are not supported by the BRD or explicitly provided project configuration.
@@ -721,22 +721,22 @@ If the supplied BRD contains a Constitution, Engineering Constitution, Technical
 
 ## `test_cases/` Directory Rule
 
-`.ai-context/test_cases/` contains test-case specifications, scenarios, acceptance-oriented test definitions, and related test planning artifacts. It is NOT the location for executable automated test code.
+`../../../.ai-context/test_cases` contains test-case specifications, scenarios, acceptance-oriented test definitions, and related test planning artifacts. It is NOT the location for executable automated test code.
 
 Executable automated tests belong under:
 
 - `tests/frontend/`
-- `tests/backend/` (for Full Stack projects)
+- `../../../tests/backend` (for Full Stack projects)
 
 ---
 
 ## `prompt_history.md` Generation & Append-Only Protocol
 
-`.ai-context/prompt_history.md` stores a complete chronological audit log of all user prompts, change requests, and AI execution turns.
+`../../../.ai-context/prompt_history.md` stores a complete chronological audit log of all user prompts, change requests, and AI execution turns.
 
 ### CRITICAL RULE — STRICT APPEND-ONLY MUTATION
 
-- `.ai-context/prompt_history.md` is a **mandatory, append-only chronological log**.
+- `../../../.ai-context/prompt_history.md` is a **mandatory, append-only chronological log**.
 - The agent MUST NEVER use full-file overwrite to erase or replace existing content in `prompt_history.md`.
 - Whenever logging a new user prompt, change request, feature execution, or session restart, the agent MUST read existing content first, and **APPEND** the new entry to the bottom of the file below all previous entries.
 
@@ -772,7 +772,7 @@ tests/
 docs/
 ```
 
-Both frontend and backend directories MUST exist for a Full Stack project, and `tests/` subdirectories MUST mirror the `modules/`, `config/`, and `shared/` hierarchy of `src/`.
+Both frontend and backend directories MUST exist for a Full Stack project, and `../../../tests` subdirectories MUST mirror the `modules/`, `config/`, and `shared/` hierarchy of `src/`.
 
 ## Frontend Only Project
 
@@ -881,7 +881,7 @@ Before creating the technology-specific project structure, collect the required 
 8. Deployment target, if known
 9. Architecture style (Default: Modular Monolith + Microservice Ready)
 
-Populate `.ai-context/project_context.md` and `.ai-context/architecture.md` with these baseline parameters.
+Populate `../../../.ai-context/project_context.md` and `.ai-context/architecture.md` with these baseline parameters.
 
 ---
 

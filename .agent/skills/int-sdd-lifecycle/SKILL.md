@@ -44,7 +44,7 @@ description: Manage the end-to-end INT SDD feature development lifecycle, includ
 
 Currently, when one spec is waiting for Gate 1 approval, the system does not block or prevent developers from drafting, generating, or progressing other specs.
 
-Multiple specs exist and progress **independently** in parallel. For example, the following spec states can exist simultaneously in `.ai-context/status.md` and `.ai-context/dashboard.html`:
+Multiple specs exist and progress **independently** in parallel. For example, the following spec states can exist simultaneously in `../../../.ai-context/status.md` and `.ai-context/dashboard.html`:
 
 | Spec ID | Spec Title | Gate 1 Status | Gate 2 Status | Spec Lifecycle Status |
 |---|---|---|---|---|
@@ -86,7 +86,7 @@ Draft → In Peer Review (Gate 1) → Changes Requested ↺
 - **Reviewer Detection on Git Pull**: Identify user Git credentials (`git config user.name`/`user.email` or configured User ID). If assigned as reviewer for pending specs, prompt with options: `Review Pending Specs` or `Work on Approved Specs`.
 - **Git & Local Reviewer Validation**: Validate authenticated user matches assigned reviewer before official approval/rejection. In local-only mode, capture reviewer metadata without failing Git validation.
 - **Plan, Tasks & Tests Generation**: Only after Gate 1 approval is granted, create `.plan.md`, `.tasks.md`, and `.test_cases.md`.
-- **TDD RED before GREEN**: Write failing executable tests (`tests/`) first and confirm RED before writing implementation code (GREEN).
+- **TDD RED before GREEN**: Write failing executable tests (`../../../tests`) first and confirm RED before writing implementation code (GREEN).
 - **Complete Development Before Gate 2**: All feature development tasks must be executed and test suites run to confirm 100% PASS before triggering Gate 2 review.
 - **Gate 2 HALT**: After development is complete and tests pass GREEN, halt and perform Gate 2 code review using the standardized Gate 2 template.
 - **Dashboard & Spec Synchronization**: Gate 1 and Gate 2 approval/rejection updates both Dashboard HTML (complete record) and Spec (current status) simultaneously.
@@ -123,8 +123,8 @@ If Gate 1 Status is **`Approved`**:
    - **Phase 1: Implementation Plan**: Create `.ai-context/plans/<feature-slug>.plan.md` from `.spec.md`.
    - **Phase 2: Task Breakdown**: Create `.ai-context/tasks/<feature-slug>.tasks.md` from `.plan.md`.
    - **Phase 3: Test Case Specifications**: Create `.ai-context/test_cases/<feature-slug>.test_cases.md` mapping 1-to-1 with Acceptance Criteria.
-   - **Phase 4: Executable TDD RED**: Generate failing automated tests under `tests/frontend/` or `tests/backend/` and confirm RED failure.
-   - **Phase 5: Implementation GREEN**: Implement feature code under `src/` until all tests pass GREEN (100% PASS).
+   - **Phase 4: Executable TDD RED**: Generate failing automated tests under `tests/frontend/` or `../../../tests/backend` and confirm RED failure.
+   - **Phase 5: Implementation GREEN**: Implement feature code under `../../../src` until all tests pass GREEN (100% PASS).
    - **Phase 6: Gate 2 Submission**: Halt execution and wait for / trigger **Gate 2 Code Review** (`.ai-context/pr_reviews/GATE2-<slug>-*.md`).
 
 ---
@@ -132,7 +132,7 @@ If Gate 1 Status is **`Approved`**:
 ### Step 2B: Workflow if Spec is REJECTED or CHANGES REQUESTED (`Rejected` / `Changes Requested`)
 
 If Gate 1 Status is **`Rejected`** or **`Changes Requested`**:
-1. **STRICT DEVELOPMENT BLOCK**: The system **STRICTLY BLOCKS** the user/developer from proceeding to planning (`.plan.md`), task generation (`.tasks.md`), test case drafting (`.test_cases.md`), or writing implementation code in `src/`!
+1. **STRICT DEVELOPMENT BLOCK**: The system **STRICTLY BLOCKS** the user/developer from proceeding to planning (`.plan.md`), task generation (`.tasks.md`), test case drafting (`.test_cases.md`), or writing implementation code in `../../../src`!
 2. The system displays a high-priority warning:
    > 🛑 **DEVELOPMENT BLOCKED — GATE 1 SPEC REJECTED**
    >
@@ -203,11 +203,11 @@ When the reviewer selects **Review Pending Specs**:
 
 5. **Multi-Artifact Synchronization Protocol**:
    Every completed PR review update MUST synchronize across **5 core repository artifacts**:
-   - **1. PR Review Record (`.ai-context/pr_reviews/`)**: Dedicated markdown record with metadata, Q&A criteria scores, comments, description, reviewer identity, and timestamp.
+   - **1. PR Review Record (`../../../.ai-context/pr_reviews`)**: Dedicated markdown record with metadata, Q&A criteria scores, comments, description, reviewer identity, and timestamp.
    - **2. Dashboard HTML (`.ai-context/dashboard.html` — SINGLE SOURCE OF TRUTH)**: Updated with complete review record data, scores, comments, description, reviewer email/ID, and timestamp.
    - **3. Governing Spec (`.ai-context/specs/<slug>.spec.md`)**: Updated status (`Approved`, `Changes Requested`, `Under Development`, `Ready for Release`) and logged entry in `## Gate Approvals & History` linking to the PR review file.
-   - **4. Project Status Board (`.ai-context/status.md`)**: Updated active spec status and daily log entry.
-   - **5. Prompt History (`.ai-context/prompt_history.md`)**: Appended turn log entry (STRICT APPEND-ONLY RULE).
+   - **4. Project Status Board (`../../../.ai-context/status.md`)**: Updated active spec status and daily log entry.
+   - **5. Prompt History (`../../../.ai-context/prompt_history.md`)**: Appended turn log entry (STRICT APPEND-ONLY RULE).
 
 6. **Continuous Review Loop**:
    Immediately after review completion and 5-artifact sync:
@@ -253,7 +253,7 @@ The system enforces strict role separation:
 When project code is available in Git, the system performs **Strict Pre-Execution Email Matching**:
 
 1. **Pre-Execution Check**:
-   The system compares authenticated Git user email (`git config user.email`) against the **Assigned Reviewer Email Roster** configured for the target PR gate in `.ai-context/project_context.md` and `.ai-context/constitution.md`.
+   The system compares authenticated Git user email (`git config user.email`) against the **Assigned Reviewer Email Roster** configured for the target PR gate in `../../../.ai-context/project_context.md` and `.ai-context/constitution.md`.
 
 2. **Access & Approval Enforcement**:
    - If the user's Git email (`git config user.email`) matches an assigned reviewer email for that PR gate, the user is granted PR review access.
@@ -288,7 +288,7 @@ What would you like to do?
 If **Review Pending Specs** is selected:
 - Filter and show assigned pending specs based on reviewer identity.
 - Execute interactive Q&A review using standardized template.
-- Save dedicated review file under `.ai-context/pr_reviews/` and sync Dashboard HTML, Spec, Status Board, and Prompt History.
+- Save dedicated review file under `../../../.ai-context/pr_reviews` and sync Dashboard HTML, Spec, Status Board, and Prompt History.
 - Loop back to show remaining pending reviews until complete.
 
 If **Work on Approved Specs** is selected:
@@ -299,7 +299,7 @@ If **Work on Approved Specs** is selected:
 
 # 6. Standardized Gate 1 Review Template (Spec & BRD Peer Review)
 
-Every Gate 1 review MUST evaluate BOTH the Feature Spec (`.spec.md`) and the linked BRD Requirement (`.ai-context/BRD.md`). It MUST utilize the standardized 22-field Gate 1 Review Template (saved under `.ai-context/pr_reviews/GATE1-<slug>-<timestamp>.md`):
+Every Gate 1 review MUST evaluate BOTH the Feature Spec (`.spec.md`) and the linked BRD Requirement (`../../../.ai-context/BRD.md`). It MUST utilize the standardized 22-field Gate 1 Review Template (saved under `.ai-context/pr_reviews/GATE1-<slug>-<timestamp>.md`):
 
 ```markdown
 # Gate 1 PR Review: <Spec ID> — <Spec Name>
@@ -382,7 +382,7 @@ The existing Dashboard HTML (`.ai-context/dashboard.html` / `gate-review-dashboa
 
 ### Single Source of Truth Roles
 - **Dashboard HTML = Complete PR Review Record** (contains full review templates, history, criteria scores, comments, descriptions, and timestamps for Gate 1 and Gate 2).
-- **PR Review Folder (`.ai-context/pr_reviews/`) = Dedicated Review Record Files**.
+- **PR Review Folder (`../../../.ai-context/pr_reviews`) = Dedicated Review Record Files**.
 - **Spec (`.spec.md`) = Current Workflow / Review Status** (contains summary state, reviewer identity link, current status, and next workflow action).
 
 ### 5-Artifact Synchronization Protocol
@@ -390,8 +390,8 @@ When Gate 1 or Gate 2 is approved or rejected:
 1. **Create Review Record File**: Save `.ai-context/pr_reviews/GATE1-<slug>-<timestamp>.md` or `GATE2-<slug>-<timestamp>.md`.
 2. **Dashboard HTML Update**: Record complete PR review template data (criteria, comments, description, reviewer identity, timestamps, next action).
 3. **Spec File Update**: Update `.ai-context/specs/<slug>.spec.md` with new status (`Approved`, `Changes Requested`, `Under Development`, `Ready for Release`), reviewer metadata, and link to the review record file.
-4. **Status Board Update**: Sync `.ai-context/status.md` active spec matrix and daily execution log.
-5. **Prompt History Update**: Append execution entry to `.ai-context/prompt_history.md` (STRICT APPEND-ONLY RULE).
+4. **Status Board Update**: Sync `../../../.ai-context/status.md` active spec matrix and daily execution log.
+5. **Prompt History Update**: Append execution entry to `../../../.ai-context/prompt_history.md` (STRICT APPEND-ONLY RULE).
 
 ---
 
@@ -407,10 +407,10 @@ The feature slug is the single stable traceability key across:
 - Tasks: `.ai-context/tasks/<slug>.tasks.md` (e.g. `dynamic-request-management.tasks.md`)
 - Test Cases: `.ai-context/test_cases/<slug>.test_cases.md` (e.g. `dynamic-request-management.test_cases.md`)
 - Git branch: `feature/<slug>`
-- Status Board: `.ai-context/status.md`
+- Status Board: `../../../.ai-context/status.md`
 
 ## CRITICAL RULE — FLAT FILE STRUCTURE (NO SUBDIRECTORIES)
-All artifact files inside `.ai-context/` MUST be created directly as **flat files** at the root of their respective category folder:
+All artifact files inside `../../../.ai-context` MUST be created directly as **flat files** at the root of their respective category folder:
 - **CORRECT**: `.ai-context/specs/dynamic-request-management.spec.md`
 - **CORRECT**: `.ai-context/plans/dynamic-request-management.plan.md`
 - **CORRECT**: `.ai-context/tasks/dynamic-request-management.tasks.md`
@@ -419,7 +419,7 @@ All artifact files inside `.ai-context/` MUST be created directly as **flat file
 **PROHIBITED**: Never create subdirectories named after the feature slug (e.g., DO NOT create `.ai-context/specs/dynamic-request-management/spec.md` or `.ai-context/plans/dynamic-request-management/plan.md`). Feature subdirectories break file linking, automated tracking, and status board traceability.
 
 ## CRITICAL RULE — PORTABLE REPOSITORY-RELATIVE PATHS (NO ABSOLUTE PATHS)
-All path references, file links, and code paths recorded inside repository artifacts (`.ai-context/`, `status.md`, specs, plans, tasks, test cases, ADRs, releases) MUST be **relative to the repository root**:
+All path references, file links, and code paths recorded inside repository artifacts (`../../../.ai-context`, `status.md`, specs, plans, tasks, test cases, ADRs, releases) MUST be **relative to the repository root**:
 - **CORRECT**: `.ai-context/specs/dynamic-request-management.spec.md`
 - **CORRECT**: `src/backend/controllers/requestController.ts`
 - **PROHIBITED**: Never write absolute local file system paths (e.g., `C:\Users\Username\...`, `c:/Users/...`, `file:///C:/Users/...`, `/home/user/...`).
@@ -434,9 +434,9 @@ All path references, file links, and code paths recorded inside repository artif
 
 ---
 
-# Status Board — `.ai-context/status.md`
+# Status Board — `../../../.ai-context/status.md`
 
-`.ai-context/status.md` is the repository project status board. It MUST follow this exact structure:
+`../../../.ai-context/status.md` is the repository project status board. It MUST follow this exact structure:
 
 ```markdown
 # Project Status Board
@@ -460,16 +460,16 @@ _Last updated: YYYY-MM-DD_
 # 1. Feature Specifications (`.spec.md`)
 
 Create specifications under:
-`.ai-context/specs/<feature-slug>.spec.md` (instantiated from `.ai-context/templates/spec.template.md`)
+`.ai-context/specs/<feature-slug>.spec.md` (instantiated from `../../../.ai-context/templates/spec.template.md`)
 
-A Spec MUST be authored from an approved BRD requirement (`.ai-context/BRD.md`). A requirement MUST NOT first appear in the Spec.
+A Spec MUST be authored from an approved BRD requirement (`../../../.ai-context/BRD.md`). A requirement MUST NOT first appear in the Spec.
 
 ## CRITICAL RULE — PROJECT TYPE & SCOPE MATCHING (FULL STACK MANDATE)
-- **Full Stack Projects**: Every feature spec (`.spec.md`) MUST define both **Frontend** (`src/frontend/`, `tests/frontend/`) and **Backend** (`src/backend/`, `tests/backend/`) Acceptance Criteria, API Contracts, Unit Test Scenarios, and Code Deliverables.
+- **Full Stack Projects**: Every feature spec (`.spec.md`) MUST define both **Frontend** (`src/frontend/`, `tests/frontend/`) and **Backend** (`../../../src/backend`, `tests/backend/`) Acceptance Criteria, API Contracts, Unit Test Scenarios, and Code Deliverables.
 - **Frontend-Only Projects**: Specs define UI components, state management, client routing, and frontend unit test cases (`tests/frontend/`).
-- **Backend-Only Projects**: Specs define API contracts, services, controllers, database models, and backend unit/integration test cases (`tests/backend/`).
+- **Backend-Only Projects**: Specs define API contracts, services, controllers, database models, and backend unit/integration test cases (`../../../tests/backend`).
 
-## Spec Template (sourced from `.ai-context/templates/spec.template.md`)
+## Spec Template (sourced from `../../../.ai-context/templates/spec.template.md`)
 ```markdown
 # Spec: <Feature Name>
 
@@ -606,11 +606,11 @@ A Plan MUST be derived from an approved Spec and MUST NOT redefine business inte
 # 3. Tasks Breakdown (`.tasks.md`)
 
 Create executable tasks under:
-`.ai-context/tasks/<feature-slug>.tasks.md` (instantiated from `.ai-context/templates/tasks.template.md`)
+`.ai-context/tasks/<feature-slug>.tasks.md` (instantiated from `../../../.ai-context/templates/tasks.template.md`)
 
 Tasks MUST be derived from the approved Plan.
 
-## Task Template (sourced from `.ai-context/templates/tasks.template.md`)
+## Task Template (sourced from `../../../.ai-context/templates/tasks.template.md`)
 ```markdown
 # Tasks: <Feature Name>
 
@@ -637,20 +637,20 @@ Test-case specifications belong under:
 Cross-feature integration scenarios belong under:
 `.ai-context/test_cases/_integration.md`
 
-Executable automated test files belong under `tests/frontend/` or `tests/backend/`.
+Executable automated test files belong under `tests/frontend/` or `../../../tests/backend`.
 
 ## CRITICAL RULE — MODULAR SPEC-DERIVED TEST CASES & TRACEABILITY
-- **Modular Spec Derivation**: All test case specifications (`.ai-context/test_cases/<feature-slug>.test_cases.md`) and executable test files (`tests/frontend/`, `tests/backend/`) MUST be derived directly from the corresponding modular sub-feature spec (`.ai-context/specs/<feature-slug>.spec.md`).
+- **Modular Spec Derivation**: All test case specifications (`.ai-context/test_cases/<feature-slug>.test_cases.md`) and executable test files (`tests/frontend/`, `../../../tests/backend`) MUST be derived directly from the corresponding modular sub-feature spec (`.ai-context/specs/<feature-slug>.spec.md`).
 - **1-to-1 Acceptance Criteria Mapping**: Every test case ID (`<slug>.TC01`, `<slug>.TC02`) MUST explicitly map to an Acceptance Criterion (`<slug>.AC1`, `<slug>.AC2`) defined in that modular spec.
-- **Full Stack Test Coverage**: For Full Stack projects, tests derived from a modular spec MUST cover both Frontend UI scenarios (`tests/frontend/`) and Backend API/Service scenarios (`tests/backend/`) specified in that modular spec.
+- **Full Stack Test Coverage**: For Full Stack projects, tests derived from a modular spec MUST cover both Frontend UI scenarios (`tests/frontend/`) and Backend API/Service scenarios (`../../../tests/backend`) specified in that modular spec.
 
 ## EXECUTABLE TEST CREATION & JEST CONFIGURATION PROTOCOL
 1. **Post-Gate 1 Artifact Generation**: Once a modular feature spec (`.ai-context/specs/<feature-slug>.spec.md`) is approved via Gate 1, the agent automatically generates:
    - Implementation Plan: `.ai-context/plans/<feature-slug>.plan.md`
    - Task Breakdown: `.ai-context/tasks/<feature-slug>.tasks.md`
    - Test Case Specification: `.ai-context/test_cases/<feature-slug>.test_cases.md`
-2. **Development Phase Executable Test Generation**: During the development stage (TDD RED phase), before writing any implementation code in `src/`, executable automated test code files (`.test.js` / `.test.jsx`) are generated under `tests/` matching the project's Jest / test runner configuration.
-3. **Hierarchy Mirroring**: Executable test code files under `tests/` MUST sit inside the exact `modules/`, `config/`, or `shared/` directory structure matching `src/`.
+2. **Development Phase Executable Test Generation**: During the development stage (TDD RED phase), before writing any implementation code in `../../../src`, executable automated test code files (`.test.js` / `.test.jsx`) are generated under `tests/` matching the project's Jest / test runner configuration.
+3. **Hierarchy Mirroring**: Executable test code files under `../../../tests` MUST sit inside the exact `modules/`, `config/`, or `shared/` directory structure matching `src/`.
 
 ## Test-First Rule
 ```text
@@ -667,7 +667,7 @@ Test Case Spec → Write Executable Test → Run Test → RED → Implementation
 Gate 2 occurs after tests are GREEN and before merging into main.
 
 ## Mandatory Role Split for Development & Gate 2
-- **Developer / SSE Role**: Developers/Engineers execute TDD (RED ➔ GREEN), implement feature tasks in `src/` and `tests/`, run test suites, and submit the completed diff for Gate 2 Code Review under their Git identity.
+- **Developer / SSE Role**: Developers/Engineers execute TDD (RED ➔ GREEN), implement feature tasks in `../../../src` and `tests/`, run test suites, and submit the completed diff for Gate 2 Code Review under their Git identity.
 - **Technical Lead / Reviewer Role**: The Technical Lead (TL) conducts the technical code review, verifies test coverage evidence, and approves Gate 2 before merging.
 
 ## Gate 2 Validation Checklist
@@ -699,9 +699,9 @@ A feature is Done for merge only when:
 
 ## Post-Gate 2 Release Logging & Next Spec Transition Protocol
 Immediately following successful Gate 2 code review approval for a feature spec (`<feature-slug>`):
-1. **Generate/Update Release Plan**: Create or update the project Release Plan document (`.ai-context/releases/RELEASE-vX.Y.Z.md`) using `.ai-context/templates/release.template.md`, recording the completed spec ID, feature title, spec link, intent summary, and Gate 2 review sign-off.
-2. **Status Board Sync**: Update `.ai-context/status.md` and `.ai-context/specs/<slug>.spec.md` to transition the spec status to `Ready for Release` or `Released (vX.Y.Z)`.
-3. **Automated Transition to Next Spec**: Immediately scan `.ai-context/BRD.md` for the next un-implemented requirement, author its modular sub-feature spec (`.ai-context/specs/<next-slug>.spec.md`), and present it for Gate 1 review approval.
+1. **Generate/Update Release Plan**: Create or update the project Release Plan document (`.ai-context/releases/RELEASE-vX.Y.Z.md`) using `../../../.ai-context/templates/release.template.md`, recording the completed spec ID, feature title, spec link, intent summary, and Gate 2 review sign-off.
+2. **Status Board Sync**: Update `../../../.ai-context/status.md` and `.ai-context/specs/<slug>.spec.md` to transition the spec status to `Ready for Release` or `Released (vX.Y.Z)`.
+3. **Automated Transition to Next Spec**: Immediately scan `../../../.ai-context/BRD.md` for the next un-implemented requirement, author its modular sub-feature spec (`.ai-context/specs/<next-slug>.spec.md`), and present it for Gate 1 review approval.
 
 ---
 
@@ -713,7 +713,7 @@ When feedback, screenshots, or bug reports are received, the system evaluates th
 
 > [!IMPORTANT]
 > **Change Request Trigger Condition**
-> - **Formal Change Request (CR)**: The system ONLY triggers the formal Change Request workflow (creating `.ai-context/change_requests/`, drafting Spec updates, and requiring Gate 1 re-approval) if the user prompt explicitly contains the keyword phrase **"Change Request"** (or `"CR"`).
+> - **Formal Change Request (CR)**: The system ONLY triggers the formal Change Request workflow (creating `../../../.ai-context/change_requests`, drafting Spec updates, and requiring Gate 1 re-approval) if the user prompt explicitly contains the keyword phrase **"Change Request"** (or `"CR"`).
 > - **Development-Related Fix / UI Bug Fix**: If the prompt does NOT contain the specific words **"Change Request"**, the system treats the request as a **Development-Related Fix** (such as small UI alignment bugs, styling fixes, edge case corrections, or minor dev tweaks) under the active approved spec.
 
 ---
@@ -733,12 +733,12 @@ When a prompt contains the explicit phrase **"Change Request"**:
 
 ### Step 0: Change Request Document Creation & Asset Archiving
 1. **Archive Provided Assets**: Save provided screenshots/documents into `.ai-context/change_requests/CR-<YYYYMMDD>-<slug>-<filename>`.
-2. **Create Change Request Document**: Instantiate `.ai-context/change_requests/CR-<YYYYMMDD>-<slug>.md` from `.ai-context/templates/change-request.template.md`.
-3. **Append to Prompt History**: Read `.ai-context/prompt_history.md` and **APPEND** the entry to the bottom.
+2. **Create Change Request Document**: Instantiate `.ai-context/change_requests/CR-<YYYYMMDD>-<slug>.md` from `../../../.ai-context/templates/change-request.template.md`.
+3. **Append to Prompt History**: Read `../../../.ai-context/prompt_history.md` and **APPEND** the entry to the bottom.
 4. **Link in Spec & Impact Matrix**: Link archived document in affected `.spec.md` files.
 
 ### Step 1: Automatic Spec Discovery & Multi-Spec Impact Analysis
-- Scan `.ai-context/status.md` and `.ai-context/specs/*.spec.md` for affected Spec IDs.
+- Scan `../../../.ai-context/status.md` and `.ai-context/specs/*.spec.md` for affected Spec IDs.
 - Generate Multi-Spec Impact Matrix listing affected Spec IDs and scope changes.
 
 ### Step 2: Spec Modification (Delta & AC Revisions)
@@ -755,8 +755,8 @@ When a prompt contains the explicit phrase **"Change Request"**:
 When a prompt does NOT contain the keyword **"Change Request"** (e.g. fixing small UI bugs, alignment glitches, minor component behavior tweaks during active development):
 
 1. **Direct Scope Check**: Confirm the fix belongs under the active approved feature spec (`.ai-context/specs/<feature-slug>.spec.md`).
-2. **TDD RED Phase**: Write or update failing unit/integration tests under `tests/` matching the UI bug or development fix.
-3. **TDD GREEN Phase**: Execute code and styling changes in `src/` to resolve the UI bug or defect.
+2. **TDD RED Phase**: Write or update failing unit/integration tests under `../../../tests` matching the UI bug or development fix.
+3. **TDD GREEN Phase**: Execute code and styling changes in `../../../src` to resolve the UI bug or defect.
 4. **Verification**: Run test suites to ensure 100% PASS and no regression.
 5. **Gate 2 Submit**: Include the fix in the final diff submitted for Gate 2 Code Review.
 

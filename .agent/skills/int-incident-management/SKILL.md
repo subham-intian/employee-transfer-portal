@@ -78,7 +78,7 @@ The application performed as designed, but the Spec contained an ambiguity, omis
 The Spec was correct, but the implementation violated the Spec's Acceptance Criteria.
 - Route to: Lightweight Bug-Fix Spec.
 - Action: Original Spec remains unchanged unless broader technical learning requires an update.
-- *ADR Trigger*: If the same incident class occurs three times, trigger an ADR (instantiated from `.ai-context/templates/adr.template.md`) to update `architecture.md` or `constitution.md`.
+- *ADR Trigger*: If the same incident class occurs three times, trigger an ADR (instantiated from `../../../.ai-context/templates/adr.template.md`) to update `architecture.md` or `constitution.md`.
 
 ## 3. Genuine New Requirement
 The issue report requests new business functionality not covered by the existing BRD baseline.
@@ -95,4 +95,4 @@ An Incident MUST NOT be marked Closed in `.ai-context/incidents/INC-YYYY-NNN.md`
 - Root cause is documented (or explicitly recorded as unknown).
 - Related Hotfix ID is recorded in the Incident file.
 - Release version (e.g. `v1.4.2`) is recorded.
-- `.ai-context/status.md` daily log is updated the same day.
+- `../../../.ai-context/status.md` daily log is updated the same day.

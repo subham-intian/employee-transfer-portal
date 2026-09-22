@@ -65,7 +65,7 @@ Close Incident
 # Lightweight Hotfix Spec Structure
 
 Create the hotfix spec under:
-`.ai-context/specs/hotfix-<incident-slug>.spec.md` (instantiated from `.ai-context/templates/hotfix-spec.template.md`)
+`.ai-context/specs/hotfix-<incident-slug>.spec.md` (instantiated from `../../../.ai-context/templates/hotfix-spec.template.md`)
 
 The hotfix spec MUST contain:
 1. **Incident ID**: `INC-YYYY-NNN`
@@ -79,7 +79,7 @@ The hotfix spec MUST contain:
 
 ---
 
-# Operational Hotfix Record (`.ai-context/hotfixes/`)
+# Operational Hotfix Record (`../../../.ai-context/hotfixes`)
 
 Create `.ai-context/hotfixes/HOTFIX-<incident-slug>.md` directly as a flat file (do NOT create subdirectories):
 - Incident ID & Hotfix ID
