@@ -45,3 +45,5 @@ CLAUDE.md
 !.ai-context/
 !.agents/
 !AGENTS.md
+/docs/docx_extracted/
+/docs/temp.zip
