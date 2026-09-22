@@ -1,18 +1,23 @@
 # Project Constitution
 
-> No BRD has been ingested yet. This file's mandatory sections are placeholders. Run the `int-brd-ingestion` workflow once a BRD is available — if the BRD contains an authoritative Constitution / Engineering Constitution section, it MUST populate this file verbatim (preserving its terminology, measurable constraints, and intent) rather than generic INT defaults.
+> This file contains the engineering constitution and project constraints derived from the Employee Internal Transfer Digital Journey BRD (Assessment Document).
 
 ## Testing Discipline
-Pending BRD ingestion — run `int-brd-ingestion` to populate from the approved BRD Constitution section.
+- **Test-First Development**: Mandatory adherence to Test-Driven Development (TDD). The workflow must follow: Test (RED) → Implementation → Test (GREEN).
+- **Spec-Derived Tests**: All test cases must be derived directly from the feature specification and acceptance criteria.
+- **Traceability**: Maintain full SDD traceability from Business Requirement → Spec → AC → API Contract → Test Cases.
 
 ## Security Posture
-Pending BRD ingestion — run `int-brd-ingestion` to populate from the approved BRD Constitution section.
+- **Security Assessment**: A dedicated security review and assessment must be conducted.
+- **Failure Handling**: System must explicitly design for and handle integration failures across downstream systems (HR, Payroll, IT, Facilities).
 
 ## Architectural Constraints
-Pending BRD ingestion — run `int-brd-ingestion` to populate from the approved BRD Constitution section.
+- **Single Digital Journey**: Provide a single view of progress through the One-Point Employee Portal.
+- **Orchestration vs Fulfillment**: The portal is responsible for orchestrating downstream activities, not for physical fulfillment of IT hardware or Facilities arrangements.
 
 ## Non-Functional Baselines
-Pending BRD ingestion — run `int-brd-ingestion` to populate from the approved BRD Constitution section.
+- **Integration**: Must design integration approaches for multiple stakeholder teams (HR, Payroll, IT, Facilities).
+- **Independent Verifiability**: Work must be decomposed into independently verifiable tasks.
 
 ## Versioning Rules
-Pending BRD ingestion — run `int-brd-ingestion` to populate from the approved BRD Constitution section.
+- Release management and versioning must follow the INT SDD methodology standard practices as required by Gate 2 and Release milestones.
