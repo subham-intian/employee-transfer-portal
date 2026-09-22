@@ -20,7 +20,7 @@ For the full detailed specification, templates, and execution protocols, see:
 2. **Copy INT Control Plane & Setup Governance**:
    - Dynamically copy `resources/INT-Control-Plane/.agent/` to `.agent/`
    - Auto-generate `AGENTS.md` in workspace root for vendor-agnostic governance
-   - Auto-copy all SDD sub-skills into `.agents/skills/` within the project repository
+   - Auto-copy all SDD sub-skills into `../skills` within the project repository
    - Auto-generate `.gitignore` with standard rules protecting `.agent/`, `.ai-context/`, and `.agents/`
 3. **Initialize `.ai-context/` Knowledge Base**:
    - Create subdirectories (`specs`, `plans`, `tasks`, `test_cases`, etc.)

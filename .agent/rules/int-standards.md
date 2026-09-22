@@ -27,7 +27,7 @@ You are assisting an engineering team at INT. Whenever you write, refactor, or s
 * Do not add any AI-specific configuration files (like .cursorrules or .copilotignore) outside of the .agent/ directory.
 
 ## 6. PR Gate Governance & Skill Resolution Hierarchy
-* Skill Resolution Hierarchy (Local First, Global Second): The system MUST ALWAYS check if local project governance (`AGENTS.md`) or local project skills (`.agents/skills/<skill_name>/SKILL.md`) exist inside the project repository root FIRST. If present, load and execute local project skills first. Fall back to global skills (`~/.gemini/config/skills/`) ONLY if not present in the local repository.
+* Skill Resolution Hierarchy (Local First, Global Second): The system MUST ALWAYS check if local project governance (`AGENTS.md`) or local project skills (`../skills`) exist inside the project repository root FIRST. If present, load and execute local project skills first. Fall back to global skills (`~/.gemini/config/skills/`) ONLY if not present in the local repository.
 * Strict Spec Generation Block before BRD Approval: Feature spec (`.spec.md`) drafting or generation is **STRICTLY PROHIBITED** until `.ai-context/BRD.md` is formally reviewed and granted `Approved` status via **Gate 0 BRD PR Review**. The agent MUST HALT and end turn upon presenting `.ai-context/BRD.md` for Gate 0 review.
 * Strictly enforce non-blocking parallel spec execution: Specs exist and progress independently once BRD Gate 0 is approved.
 * Gate 0 BRD PR Review: Dedicated BRD review gate (`.ai-context/pr_reviews/BRD-<timestamp>.md`) evaluating BRD completeness, scope boundaries, and business rules before any spec drafting begins.

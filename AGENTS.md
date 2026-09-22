@@ -1,6 +1,6 @@
 # AGENTS.md — employee-internal-transfer
 
-Vendor-agnostic governance for this repository. This file, together with `.agents/skills/`, makes the repository self-contained and independent of any specific AI tool or provider (Claude, Gemini, Cursor, Windsurf, Copilot, etc.).
+Vendor-agnostic governance for this repository. This file, together with `.agent/skills`, makes the repository self-contained and independent of any specific AI tool or provider (Claude, Gemini, Cursor, Windsurf, Copilot, etc.).
 
 ## INT AI-First Engineering Policy
 
@@ -10,7 +10,7 @@ This project is developed under the INT AI-First Spec-Driven Development (SDD) m
 
 Whenever any skill or governance rule is invoked in this repository, resolution MUST follow this priority order:
 
-1. **Priority 1 — Local Repository First**: Check `AGENTS.md` (this file) and local project skills at `.agents/skills/<skill_name>/SKILL.md`. If present, load and execute the local project skill/rule first.
+1. **Priority 1 — Local Repository First**: Check `AGENTS.md` (this file) and local project skills at `.agent/skills`. If present, load and execute the local project skill/rule first.
 2. **Priority 2 — Global Fallback Second**: Only if a requested skill or rule is not present locally, fall back to the global skill location matching whichever AI tool is in use:
    - Claude Code: `~/.claude/skills/<skill_name>/SKILL.md`
    - Gemini: `~/.gemini/config/skills/<skill_name>/SKILL.md`
@@ -56,10 +56,10 @@ BRD → Gate 0 (BRD Review) → Spec (.spec.md) → Gate 1 (Spec Peer Review)
 
 ## Related Skills
 
-- Project setup: `.agents/skills/int-project-setup/SKILL.md`
-- Feature lifecycle: `.agents/skills/int-sdd-lifecycle/SKILL.md`
-- BRD ingestion: `.agents/skills/int-brd-ingestion/SKILL.md`
-- Incident management: `.agents/skills/int-incident-management/SKILL.md`
-- Hotfix management: `.agents/skills/int-hotfix-management/SKILL.md`
-- Release management: `.agents/skills/int-release-management/SKILL.md`
-- Session continuation: `.agents/skills/int-session-continuation/SKILL.md`
+- Project setup: `.agent/skills`
+- Feature lifecycle: `.agent/skills`
+- BRD ingestion: `.agent/skills`
+- Incident management: `.agent/skills`
+- Hotfix management: `.agent/skills`
+- Release management: `.agent/skills`
+- Session continuation: `.agent/skills`
